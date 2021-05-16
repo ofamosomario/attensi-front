@@ -1,0 +1,164 @@
+<template>
+
+  <v-card
+    class="mx-auto"
+    max-width="100%"
+    outlined
+    elevation="1"
+    style="width:100%"
+  >
+
+    <v-card-text>
+      
+      <v-tabs icons-and-text centered right v-model="tab" height="60">
+
+        <v-tab key="top">
+          Top Rated
+          <v-icon>mdi-trophy</v-icon>
+        </v-tab>
+        <v-tab key="firstLast" @click="getRatedUsers()">
+          First and Last User
+          <v-icon>mdi-chart-box</v-icon> 
+        </v-tab>
+      </v-tabs>
+
+      <v-tabs-items v-model="tab">
+        <v-tab-item>
+
+          <h3>TOP USERS</h3>
+
+          <v-text-field
+            label="Week Number"
+            name="weeknumber"
+            append-outer-icon="add"
+            @click:append-outer="increment"
+            prepend-icon="remove" 
+            @click:prepend="decrement"
+            type="text"
+            v-model="weekNumber"
+          ></v-text-field>
+
+          <v-btn text outlined 
+            @click="getTopUsers()"
+            color="success">
+            FILTER
+          </v-btn>
+
+          <br />
+          <br />
+
+          <v-divider v-if="weekReturn"></v-divider>
+
+          <v-data-table v-if="weekReturn"
+            :headers="headersTop"
+            :items="usersTop"
+            :items-per-page="5"
+            class="elevation-1"
+          ></v-data-table>
+
+        </v-tab-item>
+        <v-tab-item>
+
+          <h3>FIRST AND LAST USER</h3>
+
+          <v-data-table v-if="firstAndLastReturn"
+            :headers="headersRated"
+            :items="usersRated"
+            :items-per-page="5"
+            class="elevation-1"
+          ></v-data-table>
+
+        </v-tab-item>
+      </v-tabs-items>
+
+    </v-card-text>
+
+  </v-card>
+
+</template>
+
+<script>
+import Api from '@/backend/Api'
+export default {
+  name: "Index",
+  components: {
+  },
+  data: () => ({
+    tab: null,
+    weekReturn: false,
+    firstAndLastReturn: false,
+    weekNumber: 0,
+    headersTop: 
+    [
+      { text: 'Name', value: 'name', sortable: true} ,
+      { text: 'Score', value: 'score', sortable: true} ,
+      { text: 'Time Spent', value: 'time_spent', sortable: true} ,
+    ],
+    headersRated: 
+    [
+      { text: 'Name', value: 'name', sortable: true} ,
+      { text: 'Score', value: 'score', sortable: true} ,
+      { text: 'Time Spent', value: 'time_spent', sortable: true} ,
+      { text: 'Total played', value: 'total_played', sortable: true} ,
+    ],
+    usersTop:[],
+    usersRated:[],
+  }),
+
+  mounted() {
+  },
+
+  methods: {
+
+    increment () {
+      this.weekNumber = parseInt(this.weekNumber,10) + 1
+    },
+
+    decrement () {
+      this.weekNumber = parseInt(this.weekNumber,10) - 1
+    },
+    
+    getTopUsers(){
+      Api().get(`/api/v1/users/top/${this.weekNumber}`)
+      .then(response => {
+        this.usersTop = []
+        for( var a=0; a<response.data.data.length; a++){
+          this.usersTop.push({
+            name: response.data.data[a].attributes['full-name'],
+            score: response.data.data[a].attributes['score-total'],
+            time_spent: response.data.data[a].attributes['time-spent-total']
+          });
+        }
+
+        this.weekReturn = true
+
+        if ( response.data == '' ) {
+          this.needCreateCategory = true
+        }
+      });
+    },
+
+    getRatedUsers(){
+      Api().get('/api/v1/users/bestRated')
+      .then(response => {
+        this.usersRated = []
+        for( var a=0; a<response.data.data.length; a++){
+          this.usersRated.push({
+            name: response.data.data[a].attributes['full-name'],
+            score: response.data.data[a].attributes['score-total'],
+            time_spent: response.data.data[a].attributes['time-spent-total'],
+            total_played: response.data.data[a].attributes['total-played']
+          });
+        }
+
+        this.firstAndLastReturn = true
+
+        if ( response.data == '' ) {
+          this.needCreateCategory = true
+        }
+      });
+    }
+
+  }
+};
+</script>

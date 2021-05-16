@@ -1,29 +1,19 @@
-# quizgame-front
+> *Project status:* completed </br>
+> *:busts_in_silhouette: Author:* Mário Augusto Carvalho Lara Leite </br>
+> *:email: Email:* tkyakow@gmail.com  </br>
+> :date: *Year:* 2021
 
-## Project setup
-```
-yarn install
-```
+# Case:
+**Create JSON REST-API for a service backed by a persistent SQL-database.**
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+# Versions:
+NODE: v16.1.0
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+# Compiles and hot-reloads for development
+> Go to repository ([https://github.com/ofamosomario/attensi-front])(https://github.com/ofamosomario/attensi-front) and clone the project.
 
-### Run your tests
-```
-yarn run test
-```
+> yarn install
 
-### Lints and fixes files
-```
-yarn run lint
-```
+> yarn run build
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+**Thank you!**
