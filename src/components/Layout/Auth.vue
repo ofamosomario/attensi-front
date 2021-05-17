@@ -12,27 +12,7 @@
       dark
     >
       <v-container>
-
-        <v-row 
-          align="center" 
-          justify="center"
-          no-gutters
-        >
-          <v-col align="left" justify="center">
-          </v-col>
-          
-          <v-col align="center" justify="center">
-            <span 
-              class="white--text headline"
-            >
-              Quiz Game
-            </span>
-          </v-col>
-          
-          <v-col align="right" >
-          </v-col>
-        </v-row>
-
+        <Header></Header>
       </v-container>
     </v-app-bar>
     
@@ -141,10 +121,12 @@
 <script>
 import Api from '@/backend/Api'
 import ImageLogo from '@/components/images/Logo'
+import Header from '@/components/Layout/Header'
 export default {
   name: 'Auth',
   components: {
-    ImageLogo
+    ImageLogo,
+    Header
   },
   data: () => ({
     tab: '',

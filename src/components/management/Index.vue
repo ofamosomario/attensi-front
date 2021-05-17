@@ -101,7 +101,7 @@ export default {
   components: {
     UsersList,
     ImageLogo,
-    LoaderBar
+    LoaderBar,
   },
   data: () => ({
     tab: null,
