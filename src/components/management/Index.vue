@@ -20,7 +20,7 @@
 
           <v-tab key="top">
             Top Rated
-            <v-icon>mdi-trophy</v-icon>
+            <v-icon color="champs">mdi-trophy</v-icon>
           </v-tab>
           <v-tab key="firstLast" @click="getRatedUsers()">
             First and Last User
@@ -77,6 +77,12 @@
 
           </v-tab-item>
         </v-tabs-items>
+
+        <center>
+          Created by Mário A.
+          <br />
+          <small>(tkyakow@gmail.com)</small>
+        </center>
 
       </v-card-text>
 
@@ -149,6 +155,7 @@ export default {
     },
     
     getTopUsers(){
+      this.$store.commit('loading', true);
       Api().get(`/api/v1/users/top/${this.weekNumber}`)
       .then(response => {
         this.usersTop = []
@@ -158,6 +165,7 @@ export default {
             score: response.data.data[a].attributes['score-total'],
             time_spent: response.data.data[a].attributes['time-spent-total']
           });
+          this.$store.commit('loading', false);
         }
 
         this.weekReturn = true

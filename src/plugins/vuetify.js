@@ -12,6 +12,7 @@ export default new Vuetify({
         primary: colors.indigo.darken1, // #E53935
         secondary: colors.indigo.darken1, // #FFCDD2
         accent: colors.indigo.base, // #3F51B5
+        champs: colors.yellow.darken1
       },
     },
   },
