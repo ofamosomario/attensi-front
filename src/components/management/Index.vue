@@ -43,11 +43,13 @@
               v-model="weekNumber"
             ></v-text-field>
 
-            <v-btn text outlined 
-              @click="getTopUsers()"
-              color="primary">
-              FILTER
-            </v-btn>
+            <v-card-actions class="justify-center">
+              <v-btn text outlined 
+                @click="getTopUsers()"
+                color="primary">
+                FILTER
+              </v-btn>
+            </v-card-actions>
 
             <br />
             <br />
@@ -81,6 +83,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import Api from '@/backend/Api'
 import UsersList from '@/components/userList/List'
 import ImageLogo from '@/components/images/Logo'
@@ -113,9 +116,14 @@ export default {
   }),
 
   mounted() {
+    this.currentWeekNumber()
   },
 
   methods: {
+
+    currentWeekNumber () {
+      this.weekNumber = moment().isoWeek()+1
+    },
 
     onlyNumber ($event) {
       let keyCode = ($event.keyCode ? $event.keyCode : $event.which);

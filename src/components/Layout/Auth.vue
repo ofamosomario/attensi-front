@@ -1,6 +1,10 @@
 <template>
   <div id="app-base-container">
 
+    <br />
+
+    <ImageLogo></ImageLogo>
+
     <v-app-bar
       app
       color="secondary"
@@ -96,7 +100,7 @@
                       
                       </v-card-text>
 
-                      <v-card-actions>
+                      <v-card-actions class="justify-center">
                       
                         <v-btn text outlined 
                           type="submit"
@@ -104,9 +108,6 @@
                           :disabled="!valid">
                           Sign In
                         </v-btn>
-
-                        <v-spacer></v-spacer>
-                        <v-spacer></v-spacer>
 
                       </v-card-actions>
 
@@ -139,9 +140,11 @@
 
 <script>
 import Api from '@/backend/Api'
+import ImageLogo from '@/components/images/Logo'
 export default {
   name: 'Auth',
   components: {
+    ImageLogo
   },
   data: () => ({
     tab: '',
