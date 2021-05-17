@@ -29,7 +29,6 @@ const routes = [
     name: 'auth',
     component: AuthForm
   },
-
   {
     path: '',
     component: Base,

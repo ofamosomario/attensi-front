@@ -16,4 +16,6 @@ NODE: v16.1.0
 
 > yarn run build
 
+> http://localhost:8080/auth to sign-in.
+
 **Thank you!**

@@ -11,7 +11,6 @@ export default () => {
   });
 
   instance.interceptors.request.use(function (config) {
-
     const authHeaders = JSON.parse(window.localStorage.getItem('authHeaders'));
 
     if (authHeaders) {
@@ -25,11 +24,11 @@ export default () => {
   });
 
   instance.interceptors.response.use(function (response) {
-
+    
     if (response.data['token']) {
 
       const authHeaders = {
-        'authorization': 'Bearer ' + response.data['token']
+        'authorization': response.data['token']
       }
 
       window.localStorage.setItem('authHeaders', JSON.stringify(authHeaders));

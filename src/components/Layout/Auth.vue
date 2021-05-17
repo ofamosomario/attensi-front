@@ -193,8 +193,9 @@ export default {
           email: this.email,
           password: this.password 
         }
-      }).then(() => {
-        this.$router.push("/management-panel");
+      }).then(response => {
+        console.log(response.headers);
+        //this.$router.push("/management-panel");
       });
 
     }
