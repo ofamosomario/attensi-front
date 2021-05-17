@@ -4,6 +4,8 @@
 
     <ImageLogo></ImageLogo>
 
+    <LoaderBar></LoaderBar>
+
     <v-card
       class="mx-auto"
       max-width="100%"
@@ -87,11 +89,13 @@ import moment from 'moment'
 import Api from '@/backend/Api'
 import UsersList from '@/components/userList/List'
 import ImageLogo from '@/components/images/Logo'
+import LoaderBar from '@/components/loader/Loader.vue'
 export default {
   name: "Index",
   components: {
     UsersList,
-    ImageLogo
+    ImageLogo,
+    LoaderBar
   },
   data: () => ({
     tab: null,
@@ -165,8 +169,10 @@ export default {
     },
 
     getRatedUsers(){
+      this.$store.commit('loading', true);
       Api().get('/api/v1/users/bestRated')
       .then(response => {
+        this.$store.commit('loading', false);
         this.usersRated = []
         for( var a=0; a<response.data.data.length; a++){
           this.usersRated.push({
