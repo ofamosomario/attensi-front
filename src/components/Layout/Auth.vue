@@ -133,27 +133,6 @@
 
     </v-container>
 
-    <v-footer color="lightblue" padless
-    >
-      <v-card
-        flat
-        tile
-        width="100%"
-        color="secondary"
-        class="text-center "
-      >
-        <div class="footer">
-          <div layout="row" layout-align="center center" class="layout-align-center layout-row">
-            <div layout="row" layout-xs="column" class="layout-xs-column layout-row">
-              <div flex="100" flex-xs="100" class="flex-xs-100 flex-100 footer-copyright">
-                Mário Augusto - 2021 - tkyakow@gmail.com
-              </div>
-            </div>
-          </div>
-        </div>
-      </v-card>
-    </v-footer>
-
   </div>
 </template>
 
@@ -193,9 +172,8 @@ export default {
           email: this.email,
           password: this.password 
         }
-      }).then(response => {
-        console.log(response.headers);
-        //this.$router.push("/management-panel");
+      }).then(() => {
+        this.$router.push("/management-panel");
       });
 
     }

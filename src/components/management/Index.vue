@@ -1,87 +1,94 @@
 <template>
 
-  <v-card
-    class="mx-auto"
-    max-width="100%"
-    outlined
-    elevation="1"
-    style="width:100%"
-  >
+  <div>
 
-    <v-card-text>
-      
-      <v-tabs icons-and-text centered right v-model="tab" height="60">
+    <ImageLogo></ImageLogo>
 
-        <v-tab key="top">
-          Top Rated
-          <v-icon>mdi-trophy</v-icon>
-        </v-tab>
-        <v-tab key="firstLast" @click="getRatedUsers()">
-          First and Last User
-          <v-icon>mdi-chart-box</v-icon> 
-        </v-tab>
-      </v-tabs>
+    <v-card
+      class="mx-auto"
+      max-width="100%"
+      outlined
+      elevation="1"
+      style="width:100%"
+    >
 
-      <v-tabs-items v-model="tab">
-        <v-tab-item>
+      <v-card-text>
+    
+        <v-tabs icons-and-text centered right v-model="tab" height="60">
 
-          <h3>TOP USERS</h3>
+          <v-tab key="top">
+            Top Rated
+            <v-icon>mdi-trophy</v-icon>
+          </v-tab>
+          <v-tab key="firstLast" @click="getRatedUsers()">
+            First and Last User
+            <v-icon>mdi-chart-box</v-icon> 
+          </v-tab>
+        </v-tabs>
 
-          <v-text-field
-            label="Week Number"
-            name="weeknumber"
-            append-outer-icon="add"
-            @click:append-outer="increment"
-            prepend-icon="remove" 
-            @click:prepend="decrement"
-            type="text"
-            v-model="weekNumber"
-          ></v-text-field>
+        <v-tabs-items v-model="tab">
+          <v-tab-item>
 
-          <v-btn text outlined 
-            @click="getTopUsers()"
-            color="success">
-            FILTER
-          </v-btn>
+            <h3>TOP USERS</h3>
 
-          <br />
-          <br />
+            <v-text-field
+              label="Week Number"
+              name="weeknumber"
+              append-outer-icon="add"
+              @click:append-outer="increment"
+              prepend-icon="remove" 
+              @click:prepend="decrement"
+              type="text"
+              @keypress="onlyNumber"
+              v-model="weekNumber"
+            ></v-text-field>
 
-          <v-divider v-if="weekReturn"></v-divider>
+            <v-btn text outlined 
+              @click="getTopUsers()"
+              color="primary">
+              FILTER
+            </v-btn>
 
-          <v-data-table v-if="weekReturn"
-            :headers="headersTop"
-            :items="usersTop"
-            :items-per-page="5"
-            class="elevation-1"
-          ></v-data-table>
+            <br />
+            <br />
 
-        </v-tab-item>
-        <v-tab-item>
+            <v-divider v-if="weekReturn"></v-divider>
 
-          <h3>FIRST AND LAST USER</h3>
+            <UsersList
+            :headersRated="headersTop"
+            :usersRated="usersTop"
+            :firstAndLastReturn="weekReturn">
+            </UsersList>
 
-          <v-data-table v-if="firstAndLastReturn"
-            :headers="headersRated"
-            :items="usersRated"
-            :items-per-page="5"
-            class="elevation-1"
-          ></v-data-table>
+          </v-tab-item>
+          <v-tab-item>
 
-        </v-tab-item>
-      </v-tabs-items>
+            <h3>FIRST AND LAST USER</h3>
 
-    </v-card-text>
+            <UsersList
+            :headersRated="headersRated"
+            :usersRated="usersRated"
+            :firstAndLastReturn="firstAndLastReturn">
+            </UsersList>
 
-  </v-card>
+          </v-tab-item>
+        </v-tabs-items>
 
+      </v-card-text>
+
+    </v-card>
+  </div>
 </template>
 
 <script>
 import Api from '@/backend/Api'
+import UsersList from '@/components/userList/List'
+import ImageLogo from '@/components/images/Logo'
 export default {
   name: "Index",
   components: {
+    UsersList,
+    ImageLogo
   },
   data: () => ({
     tab: null,
@@ -110,12 +117,23 @@ export default {
 
   methods: {
 
+    onlyNumber ($event) {
+      let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
+        $event.preventDefault();
+      }
+    },
+
     increment () {
       this.weekNumber = parseInt(this.weekNumber,10) + 1
     },
 
     decrement () {
-      this.weekNumber = parseInt(this.weekNumber,10) - 1
+      if( this.weekNumber <= 0) {
+        this.weekNumber = 1
+      } else {
+        this.weekNumber = parseInt(this.weekNumber,10) - 1
+      }
     },
     
     getTopUsers(){
