@@ -21,7 +21,11 @@
             <span 
               class="white--text headline"
             >
-              Welcome
+              <img 
+                alt="Logo" 
+                src="https://cdn3.iconfinder.com/data/icons/vol-6/128/vr-256.png"
+                width="46"
+              >
             </span>
           </v-col>
           
@@ -35,6 +39,7 @@
     <v-container id="main-container">
       <router-view></router-view>
     </v-container>
+
   </div>
 </template>
 
